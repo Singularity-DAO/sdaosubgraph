@@ -9,6 +9,7 @@ dataSources:
     source:
       address: "0x993864e43caa7f7f12953ad6feb1d1ca635b875f"
       abi: SingDao
+      startBlock: 12387551
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.2
