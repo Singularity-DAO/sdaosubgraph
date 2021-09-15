@@ -1,4 +1,5 @@
 specVersion: 0.0.1
+description: SDAO
 schema:
   file: ./schema.graphql
 dataSources:
@@ -13,6 +14,9 @@ dataSources:
       apiVersion: 0.0.2
       language: wasm/assemblyscript
       entities:
+        - User
+        - UserCounter
+        - TransferCounter
         - Approval
         - DelegateChanged
         - DelegateVotesChanged
