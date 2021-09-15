@@ -1,3 +1,22 @@
+
+type User @entity {
+  id: ID!
+  address: String!
+  balance: BigInt!
+  transactionCount: Int!
+}
+
+type UserCounter @entity {
+  id: ID!
+  count: Int!
+}
+
+type TransferCounter @entity {
+  id: ID!
+  count: Int!
+  totalTransferred: BigInt!
+}
+
 type Approval @entity {
   id: ID!
   owner: Bytes! # address
@@ -19,22 +38,6 @@ type DelegateVotesChanged @entity {
   newBalance: BigInt! # uint256
 }
 
-type OwnerChanged @entity {
-  id: ID!
-  oldOwner: Bytes! # address
-  newOwner: Bytes! # address
-}
-
-type OwnerNominated @entity {
-  id: ID!
-  newOwner: Bytes! # address
-}
-
-type OwnershipTransferred @entity {
-  id: ID!
-  previousOwner: Bytes! # address
-  newOwner: Bytes! # address
-}
 
 type Transfer @entity {
   id: ID!

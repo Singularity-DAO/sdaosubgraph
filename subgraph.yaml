@@ -16,9 +16,6 @@ dataSources:
         - Approval
         - DelegateChanged
         - DelegateVotesChanged
-        - OwnerChanged
-        - OwnerNominated
-        - OwnershipTransferred
         - Transfer
       abis:
         - name: SingDao
@@ -30,12 +27,6 @@ dataSources:
           handler: handleDelegateChanged
         - event: DelegateVotesChanged(indexed address,uint256,uint256)
           handler: handleDelegateVotesChanged
-        - event: OwnerChanged(indexed address,indexed address)
-          handler: handleOwnerChanged
-        - event: OwnerNominated(indexed address)
-          handler: handleOwnerNominated
-        - event: OwnershipTransferred(indexed address,indexed address)
-          handler: handleOwnershipTransferred
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
       file: ./src/mapping.ts
