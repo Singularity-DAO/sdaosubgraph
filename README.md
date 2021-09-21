@@ -4,7 +4,6 @@ subgraph for SDAO token
 
 The Graph exposes a GraphQL endpoint to query the events and entities within the SingularityDao ecosytem.
 
-Master Chef: Indexes all MasterChef staking data: https://thegraph.com/studio/subgraph/singularity/
 
 To build and deploy
 Install graph-CLI : yarn global add @graphprotocol/graph-cli or npm install -g @graphprotocol/graph-cli
