@@ -1,7 +1,7 @@
 specVersion: 0.0.2
 description: SDAO
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
   - kind: ethereum/contract
     name: SingDao
@@ -24,7 +24,7 @@ dataSources:
         - Transfer
       abis:
         - name: SingDao
-          file: ./abis/SingDao.json
+          file: SingDao/abis/SingDao.json
       eventHandlers:
         - event: Approval(indexed address,indexed address,uint256)
           handler: handleApproval
@@ -34,4 +34,4 @@ dataSources:
           handler: handleDelegateVotesChanged
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-      file: ./src/mapping.ts
+      file: SingDao/SingDao.wasm

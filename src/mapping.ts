@@ -6,6 +6,15 @@ import {
 } from "../generated/SingDao/SingDao"
 
 import {
+  JSONValue,
+  TypedMap,
+  Entity,
+  Bytes,
+  Address,
+  BigInt
+} from "@graphprotocol/graph-ts";
+
+import {
   User,
   UserCounter,
   TransferCounter
@@ -15,8 +24,7 @@ import {
   Approval,
   DelegateChanged,
   DelegateVotesChanged,
-  Transfer,
-  Entity
+  Transfer
 } from "../generated/schema"
 
 
@@ -52,25 +60,24 @@ export function handleDelegateVotesChanged(
   entity.save()
 }
 
+// export function handleTransfer(event: TransferEvent): void {
+//   let entity = new Transfer(
+//     event.transaction.hash.toHex() + "-" + event.logIndex.toString()
+//   )
+//   entity.from = event.params.from
+//   entity.to = event.params.to
+//   entity.amount = event.params.amount
+//   entity.save()
+// }
+
 
 export function handleTransfer(event: TransferEvent): void {
-  let entity = new Transfer(
-    event.transaction.hash.toHex() + "-" + event.logIndex.toString()
-  )
-  entity.from = event.params.from
-  entity.to = event.params.to
-  entity.amount = event.params.amount
-  entity.save()
-}
-
-export function handleTransfer(event: Transfer): void {
-  let day = (event.block.timestamp / BigInt.fromI32(60 * 60 * 24))
 
   let userFrom = User.load(event.params.from.toHex())
   if (userFrom == null) {
     userFrom = newUser(event.params.from.toHex(), event.params.from.toHex());
   }
-  userFrom.balance = userFrom.balance - event.params.value
+  userFrom.balance = userFrom.balance - event.params.amount
   userFrom.transactionCount = userFrom.transactionCount + 1
   userFrom.save()
 
@@ -87,25 +94,23 @@ export function handleTransfer(event: Transfer): void {
       userCounter.count = userCounter.count + 1
     }
     userCounter.save()
-    userCounter.id = day.toString()
-    userCounter.save()
+
   }
-  userTo.balance = userTo.balance + event.params.value
+  userTo.balance = userTo.balance + event.params.amount
   userTo.transactionCount = userTo.transactionCount + 1
   userTo.save()
 
   // Transfer counter total and historical
-  let transferCounter = TransferCounter.load('singleton')
-  if (transferCounter == null) {
-    transferCounter = new TransferCounter('singleton')
-    transferCounter.count = 0
-    transferCounter.totalTransferred = BigInt.fromI32(0)
-  }
-  transferCounter.count = transferCounter.count + 1
-  transferCounter.totalTransferred = transferCounter.totalTransferred + event.params.value
-  transferCounter.save()
-  transferCounter.id = day.toString()
-  transferCounter.save()
+  // let transferCounter = TransferCounter.load('singleton')
+  // if (transferCounter == null) {
+  //   transferCounter = new TransferCounter('singleton')
+  //   transferCounter.count = 0
+  //   transferCounter.totalTransferred = BigInt.fromI32(0)
+  // }
+  // transferCounter.count = transferCounter.count + 1
+  // transferCounter.totalTransferred = transferCounter.totalTransferred + event.params.amount
+  // transferCounter.save()
+
 }
 
 function newUser(id: string, address: string): User {

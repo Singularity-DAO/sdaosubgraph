@@ -6,6 +6,17 @@ type User @entity {
   transactionCount: Int!
 }
 
+type UserCounter @entity {
+  id: ID!
+  count: Int!
+}
+
+type TransferCounter @entity {
+  id: ID!
+  count: Int!
+  totalTransferred: BigInt!
+}
+
 type Approval @entity {
   id: ID!
   owner: Bytes! # address
