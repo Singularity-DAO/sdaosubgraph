@@ -11,12 +11,6 @@ type UserCounter @entity {
   count: Int!
 }
 
-type TransferCounter @entity {
-  id: ID!
-  count: Int!
-  totalTransferred: BigInt!
-}
-
 type Approval @entity {
   id: ID!
   owner: Bytes! # address

@@ -73,6 +73,14 @@ export function handleDelegateVotesChanged(
 
 export function handleTransfer(event: TransferEvent): void {
 
+  let entity = new Transfer(
+    event.transaction.hash.toHex() + "-" + event.logIndex.toString()
+  )
+  entity.from = event.params.from
+  entity.to = event.params.to
+  entity.amount = event.params.amount
+  entity.save()
+
   let userFrom = User.load(event.params.from.toHex())
   if (userFrom == null) {
     userFrom = newUser(event.params.from.toHex(), event.params.from.toHex());
@@ -96,20 +104,10 @@ export function handleTransfer(event: TransferEvent): void {
     userCounter.save()
 
   }
+
   userTo.balance = userTo.balance + event.params.amount
   userTo.transactionCount = userTo.transactionCount + 1
   userTo.save()
-
-  // Transfer counter total and historical
-  // let transferCounter = TransferCounter.load('singleton')
-  // if (transferCounter == null) {
-  //   transferCounter = new TransferCounter('singleton')
-  //   transferCounter.count = 0
-  //   transferCounter.totalTransferred = BigInt.fromI32(0)
-  // }
-  // transferCounter.count = transferCounter.count + 1
-  // transferCounter.totalTransferred = transferCounter.totalTransferred + event.params.amount
-  // transferCounter.save()
 
 }
 
